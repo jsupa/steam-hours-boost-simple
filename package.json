@@ -1,0 +1,40 @@
+{
+  "name": "steam-hours-boost-simple",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js --ignore data/",
+    "debug": "nodemon --inspect index.js --ignore data/",
+    "start": "NODE_ENV=production node index.js",
+    "lint:check": "eslint . --ignore-path .gitignore --ext .js",
+    "lint:staged": "lint-staged",
+    "test": "jest --passWithNoTests",
+    "prepare": "husky install"
+  },
+  "keywords": [],
+  "author": "Jakub Supa <hello@code-planet.eu>",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.11.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsonc": "^2.2.1",
+    "eslint-plugin-prefer-arrow-functions": "^3.1.4",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.6.0"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix"
+  },
+  "dependencies": {
+    "betterlogger.js": "^1.0.2",
+    "steam-totp": "^2.1.2",
+    "steam-user": "^4.24.6",
+    "steamcommunity": "^3.44.1"
+  }
+}

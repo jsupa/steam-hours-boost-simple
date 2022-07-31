@@ -1,0 +1,9 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+if [ "$3" = "1" ]; then
+  # install npm packages
+  npm install
+  git pull
+  git branch --merged | grep -v \* | xargs --no-run-if-empty git branch -D
+fi
