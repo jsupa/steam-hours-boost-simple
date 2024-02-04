@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon index.js --ignore data/",
     "debug": "nodemon --inspect index.js --ignore data/",
-    "start": "NODE_ENV=production node index.js",
+    "start": "node index.js",
     "lint:check": "eslint . --ignore-path .gitignore --ext .js",
     "lint:staged": "lint-staged",
     "test": "jest --passWithNoTests",
@@ -16,25 +16,27 @@
   "author": "Jakub Supa <hello@code-planet.eu>",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^8.11.0",
+    "eslint": "^8.56.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-jsonc": "^2.2.1",
-    "eslint-plugin-prefer-arrow-functions": "^3.1.4",
-    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-config-prettier": "^8.10.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsonc": "^2.13.0",
+    "eslint-plugin-prefer-arrow-functions": "^3.2.4",
+    "eslint-plugin-prettier": "^4.2.1",
     "husky": "^7.0.4",
-    "lint-staged": "^12.3.7",
-    "nodemon": "^2.0.15",
-    "prettier": "^2.6.0"
+    "lint-staged": "^12.5.0",
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.8"
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix"
   },
   "dependencies": {
     "betterlogger.js": "^1.0.2",
+    "qrcode-terminal": "^0.12.0",
+    "steam-session": "^1.7.2",
     "steam-totp": "^2.1.2",
-    "steam-user": "^4.24.6",
-    "steamcommunity": "^3.44.1"
+    "steam-user": "^4.29.3",
+    "steamcommunity": "^3.48.2"
   }
 }

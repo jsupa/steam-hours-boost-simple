@@ -1,30 +1,40 @@
 const SteamUser = require('steam-user')
-const SteamCommunity = require('steamcommunity')
-const SteamTotp = require('steam-totp')
 const { Logger } = require('betterlogger.js')
+const qrcode = require('qrcode-terminal')
+const { LoginSession, EAuthTokenPlatformType } = require('steam-session')
 
 const client = new SteamUser()
-const community = new SteamCommunity()
 
 const logger = new Logger('Steam Idle').setDebugging(99)
-
-const login = {
-  accountName: process.env.USER_NAME,
-  password: process.env.USER_PASSWORD,
-  twoFactorCode: SteamTotp.generateAuthCode(process.env.USER_AUTH)
-}
-
-client.logOn(login)
 
 client.on('loggedOn', () => {
   logger.log(`Logged in as ${client.steamID.getSteam2RenderedID()}`)
 
   client.setPersona(SteamUser.EPersonaState.Online)
-  client.setUIMode(SteamUser.EClientUIMode.BigPicture)
-  client.gamesPlayed([20, 440, 730])
+  client.gamesPlayed([730])
 })
 
-client.on('webSession', (sessionID, cookies) => {
-  logger.log(`Cookies set ${client.steamID.getSteam2RenderedID()}`)
-  community.setCookies(cookies)
-})
+const init = async () => {
+  const session = new LoginSession(EAuthTokenPlatformType.SteamClient)
+  const startResult = await session.startWithQR()
+
+  qrcode.generate(startResult.qrChallengeUrl, { small: true })
+
+  session.on('remoteInteraction', () => {
+    logger.log("Looks like you've scanned the code! Now just approve the login.")
+  })
+
+  session.on('timeout', () => {
+    logger.error('The login session has timed out.')
+  })
+
+  session.on('error', err => {
+    logger.error('An error occurred while trying to login:', err)
+  })
+
+  session.on('authenticated', async () => {
+    client.logOn({ refreshToken: session.refreshToken })
+  })
+}
+
+init()
